@@ -29,8 +29,10 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # new 1405-05-07
-ALLOWED_HOSTS = ["api.ginkova.com",]
+ALLOWED_HOSTS = ["api.ginkova.com",
+                 "ginkova-backend.onrender.com",]
 # ALLOWED_HOSTS = ["api.ginkova.com",
+#                  "ginkova-backend.onrender.com",
 #                  "localhost",
 #                  "127.0.0.1"
 #                  ]
