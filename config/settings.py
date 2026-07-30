@@ -29,10 +29,11 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # new 1405-05-07
-ALLOWED_HOSTS = ["api.ginkova.com",
-                 "localhost",
-                 "127.0.0.1"
-                 ]
+ALLOWED_HOSTS = ["api.ginkova.com",]
+# ALLOWED_HOSTS = ["api.ginkova.com",
+#                  "localhost",
+#                  "127.0.0.1"
+#                  ]
 
 
 # Application definition
@@ -183,5 +184,9 @@ ACTIVE_PAYMENT_GATEWAYS = ['fake', "mellat", "melli", "zarinpal"]  # Default to 
 CORS_ALLOWED_ORIGINS = [ 
                         "https://ginkova.com",
                         "https://www.ginkova.com",
-                        "http://localhost:5173",
                         ]
+# CORS_ALLOWED_ORIGINS = [ 
+#                         "https://ginkova.com",
+#                         "https://www.ginkova.com",
+#                         "http://localhost:5173",
+#                         ]
