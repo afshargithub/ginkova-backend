@@ -1,0 +1,654 @@
+Folder PATH listing for volume My_Lovely_Laptop
+Volume serial number is 000000F5 6A72:CE85
+C:.
+|   .env
+|   .gitignore
+|   manage.py
+|   md_PROJECT_MASTER.md
+|   md_TODO.md
+|   ms.py
+|   requirements.txt
+|   tree.txt
+|   
++---accounts
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_useraddress.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_useraddress.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---cart
+|   |   admin.py
+|   |   api.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   serializers_old1.py
+|   |   services.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_cartitem_consumed_by.py
+|   |   |   0003_remove_cartitem_meal.py
+|   |   |   0004_cartitem_restaurant_meal.py
+|   |   |   0005_remove_cartitem_restaurant_meal.py
+|   |   |   0006_cartitem_restaurant_meal.py
+|   |   |   0007_alter_cartitem_restaurant_meal.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0001_initial________________.cpython-311.pyc
+|   |           0002_cartitem_consumed_by.cpython-311.pyc
+|   |           0002_cartitem_consumed_by_________________.cpython-311.pyc
+|   |           0003_remove_cartitem_meal.cpython-311.pyc
+|   |           0004_cartitem_restaurant_meal.cpython-311.pyc
+|   |           0005_remove_cartitem_restaurant_meal.cpython-311.pyc
+|   |           0006_cartitem_restaurant_meal.cpython-311.pyc
+|   |           0007_alter_cartitem_restaurant_meal.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---common
+|   |   admin.py
+|   |   apps.py
+|   |   choices.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           choices.cpython-311.pyc
+|           models.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---config
+|   |   asgi.py
+|   |   settings.py
+|   |   urls.py
+|   |   wsgi.py
+|   |   __init__.py
+|   |   
+|   \---__pycache__
+|           settings.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           wsgi.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---core
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---dashboard
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---docs
++---health
+|   |   admin.py
+|   |   api.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   services.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_alter_healthgoal_options_healthgoal_display_order_and_more.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_alter_healthgoal_options_healthgoal_display_order_and_more.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           services.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---ingradients
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---locale
+|   +---en
+|   +---fa
+|   +---hy
+|   \---ru
++---meals
+|   |   admin.py
+|   |   api.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_meal_image_meal_is_featured.py
+|   |   |   0003_remove_meal_image_remove_meal_price.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_meal_image_meal_is_featured.cpython-311.pyc
+|   |           0003_remove_meal_image_remove_meal_price.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           views.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---media
+|   \---meals
+|           Grilled_Chicken.jpg
+|           
++---notifications
+|   |   admin.py
+|   |   admin_old1.py
+|   |   api.py
+|   |   apps.py
+|   |   factory.py
+|   |   manager.py
+|   |   models.py
+|   |   models_old1.py
+|   |   serializers.py
+|   |   services.py
+|   |   signals.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_create_default_channels.py
+|   |   |   0003_alter_notificationtemplate_unique_together_and_more.py
+|   |   |   0004_alter_notification_channel_and_more.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_create_default_channels.cpython-311.pyc
+|   |           0003_alter_notificationtemplate_unique_together_and_more.cpython-311.pyc
+|   |           0004_alter_notification_channel_and_more.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---providers
+|   |   |   base.py
+|   |   |   email.py
+|   |   |   push.py
+|   |   |   sms.py
+|   |   |   telegram.py
+|   |   |   whatsapp.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           base.cpython-311.pyc
+|   |           email.cpython-311.pyc
+|   |           push.cpython-311.pyc
+|   |           sms.cpython-311.pyc
+|   |           whatsapp.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           factory.cpython-311.pyc
+|           manager.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           services.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---nutrition
+|   |   admin.py
+|   |   api.py
+|   |   apps.py
+|   |   models.py
+|   |   services.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           services.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---orders
+|   |   admin.py
+|   |   api.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   serializers_old1.py
+|   |   serializers_old2.py
+|   |   services.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_order_delivery_address_alter_order_status.py
+|   |   |   0003_alter_order_status.py
+|   |   |   0004_alter_order_status.py
+|   |   |   0005_remove_orderitem_meal.py
+|   |   |   0006_order_restaurant_orderitem_restaurant_meal.py
+|   |   |   0007_alter_order_restaurant_and_more.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_alter_order_status.cpython-311.pyc
+|   |           0002_order_delivery_address_alter_order_status.cpython-311.pyc
+|   |           0003_alter_order_status.cpython-311.pyc
+|   |           0004_alter_order_status.cpython-311.pyc
+|   |           0005_remove_orderitem_meal.cpython-311.pyc
+|   |           0006_order_restaurant_orderitem_restaurant_meal.cpython-311.pyc
+|   |           0007_alter_order_restaurant_and_more.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           services.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---partners
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---payments
+|   |   admin.py
+|   |   admin_old1.py
+|   |   api.py
+|   |   api_old1.py
+|   |   api_old2.py
+|   |   api_old3.py
+|   |   apps.py
+|   |   models.py
+|   |   models_old1.py
+|   |   serializers.py
+|   |   serializers_new1.py
+|   |   services.py
+|   |   services_new1.py
+|   |   services_old1.py
+|   |   services_old2.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---gateways
+|   |   |   base.py
+|   |   |   factory.py
+|   |   |   fake.py
+|   |   |   mellat_gateway.py
+|   |   |   melli_gateway.py
+|   |   |   zarinpal_gateway.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           base.cpython-311.pyc
+|   |           factory.cpython-311.pyc
+|   |           fake.cpython-311.pyc
+|   |           mellat_gateway.cpython-311.pyc
+|   |           melli_gateway.cpython-311.pyc
+|   |           zarinpal_gateway.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_remove_payment_amount_remove_payment_method_and_more.py
+|   |   |   0003_alter_payment_order.py
+|   |   |   0004_payment_payment_number_alter_payment_order_and_more.py
+|   |   |   0005_alter_payment_payment_number.py
+|   |   |   0006_alter_payment_payment_number.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_remove_payment_amount_remove_payment_method_and_more.cpython-311.pyc
+|   |           0003_alter_payment_order.cpython-311.pyc
+|   |           0004_alter_payment_order_alter_payment_user.cpython-311.pyc
+|   |           0004_payment_payment_number_alter_payment_order_and_more.cpython-311.pyc
+|   |           0005_alter_payment_payment_number.cpython-311.pyc
+|   |           0005_payment_payment_number.cpython-311.pyc
+|   |           0006_alter_payment_payment_number.cpython-311.pyc
+|   |           0007_remove_payment_payment_number.cpython-311.pyc
+|   |           0008_payment_payment_number.cpython-311.pyc
+|   |           0009_remove_payment_payment_number.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           serializers_new1.cpython-311.pyc
+|           services.cpython-311.pyc
+|           services_new1.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---recipes
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_recipeingredient_unit_and_more.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_recipeingredient_unit_and_more.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---recommandiation
+|   |   admin.py
+|   |   api.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   services.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_nutritionrule.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_nutritionrule.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           services.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---restaurants
+|   |   admin.py
+|   |   api.py
+|   |   api_old1.py
+|   |   apps.py
+|   |   models.py
+|   |   serializers.py
+|   |   serializers_old1.py
+|   |   tests.py
+|   |   urls.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   0002_restaurantmeal.py
+|   |   |   0003_remove_restaurantmeal_restaurant_and_more.py
+|   |   |   0004_initial.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-311.pyc
+|   |           0002_restaurantmeal.cpython-311.pyc
+|   |           0003_remove_restaurantmeal_restaurant_and_more.cpython-311.pyc
+|   |           0004_initial.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           api.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           serializers.cpython-311.pyc
+|           urls.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
++---static
++---templates
+|   |   _base.html
+|   |   
+|   \---includes
++---users
+|   |   admin.py
+|   |   apps.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           __init__.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           admin.cpython-311.pyc
+|           apps.cpython-311.pyc
+|           models.cpython-311.pyc
+|           tests.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
+\---wallet
+    |   admin.py
+    |   admin_old.py
+    |   api.py
+    |   apps.py
+    |   models.py
+    |   models_old.py
+    |   serializers.py
+    |   services.py
+    |   tests.py
+    |   urls.py
+    |   views.py
+    |   __init__.py
+    |   
+    +---migrations
+    |   |   0001_initial.py
+    |   |   0002_wallettransaction_order_wallettransaction_payment.py
+    |   |   0003_remove_wallettransaction_order_and_more.py
+    |   |   0004_alter_wallettransaction_options_alter_wallet_user_and_more.py
+    |   |   __init__.py
+    |   |   
+    |   \---__pycache__
+    |           0001_initial.cpython-311.pyc
+    |           0002_wallettransaction_order_wallettransaction_payment.cpython-311.pyc
+    |           0003_remove_wallettransaction_order_and_more.cpython-311.pyc
+    |           0004_alter_wallettransaction_options_alter_wallet_user_and_more.cpython-311.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    \---__pycache__
+            admin.cpython-311.pyc
+            api.cpython-311.pyc
+            apps.cpython-311.pyc
+            models.cpython-311.pyc
+            serializers.cpython-311.pyc
+            services.cpython-311.pyc
+            tests.cpython-311.pyc
+            urls.cpython-311.pyc
+            __init__.cpython-311.pyc
+            
