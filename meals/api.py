@@ -74,8 +74,7 @@ class MealCategoryListAPIView(APIView):
 
         return Response(
             serializer.data
-        )
-        
+        )    
         
         
 
