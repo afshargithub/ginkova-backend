@@ -47,26 +47,27 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'common.apps.CommonConfig',                   #'common',          # add
-    'accounts.apps.AccountsConfig',               #'accounts',        # add
-    'users.apps.UsersConfig',                     #'users',           # add
-    'health.apps.HealthConfig',                   #'health',          # add
-    'nutrition.apps.NutritionConfig',             #'nutrition',       # add
-    'ingradients.apps.IngradientsConfig',         #'ingradients',     # add
-    'recipes.apps.RecipesConfig',                 #'recipes',         # add
-    'meals.apps.MealsConfig',                     #'meals',           # add
-    'orders.apps.OrdersConfig',                   #'orders',          # add
-    'wallet.apps.WalletConfig',                   #'wallet',          # add
-    'payments.apps.PaymentsConfig',               #'payments',        # add
-    'recommandiation.apps.RecommandiationConfig', #'recommandiation', # add
-    'partners.apps.PartnersConfig',               #'partners',        # add
-    'dashboard.apps.DashboardConfig',             #'dashboard',       # add
-    'core.apps.CoreConfig',                       #'core',            # add
-    'cart.apps.CartConfig',                       #'cart',            # add
-    'notifications.apps.NotificationsConfig',     #'notifications',   # add
-    'restaurants.apps.RestaurantsConfig',         #'restaurants',     # add
+    "storages",                                   #'cloudflare-storage', # add
+    'common.apps.CommonConfig',                   #'common',             # add
+    'accounts.apps.AccountsConfig',               #'accounts',           # add
+    'users.apps.UsersConfig',                     #'users',              # add
+    'health.apps.HealthConfig',                   #'health',             # add
+    'nutrition.apps.NutritionConfig',             #'nutrition',          # add
+    'ingradients.apps.IngradientsConfig',         #'ingradients',        # add
+    'recipes.apps.RecipesConfig',                 #'recipes',            # add
+    'meals.apps.MealsConfig',                     #'meals',              # add
+    'orders.apps.OrdersConfig',                   #'orders',             # add
+    'wallet.apps.WalletConfig',                   #'wallet',             # add
+    'payments.apps.PaymentsConfig',               #'payments',           # add
+    'recommandiation.apps.RecommandiationConfig', #'recommandiation',    # add
+    'partners.apps.PartnersConfig',               #'partners',           # add
+    'dashboard.apps.DashboardConfig',             #'dashboard',          # add
+    'core.apps.CoreConfig',                       #'core',               # add
+    'cart.apps.CartConfig',                       #'cart',               # add
+    'notifications.apps.NotificationsConfig',     #'notifications',      # add
+    'restaurants.apps.RestaurantsConfig',         #'restaurants',        # add
     'corsheaders',                                #'django-cors-headers',# add
-    'rest_framework',                             #'rest_frameword',  # add
+    'rest_framework',                             #'rest_frameword',     # add
 ]
 
 MIDDLEWARE = [
@@ -173,6 +174,56 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  # Add this line to specify the media files directory
 AUTH_USER_MODEL = 'accounts.User'  # Add this line to specify the custom user model
 
+# -------------Cloudflare R2 Configuration--------------
+# --------------------------------------------------
+# File storage configuration
+# --------------------------------------------------
+USE_R2 = config(
+    "USE_R2",
+    default=False,
+    cast=bool,
+)
+STORAGES = {
+    "default": {
+        "BACKEND": (
+            "django.core.files.storage."
+            "FileSystemStorage"
+        ),
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "django.contrib.staticfiles.storage."
+            "StaticFilesStorage"
+        ),
+    },
+}
+if USE_R2:
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": config(
+                "R2_ACCESS_KEY_ID"
+            ),
+            "secret_key": config(
+                "R2_SECRET_ACCESS_KEY"
+            ),
+            "bucket_name": config(
+                "R2_BUCKET_NAME"
+            ),
+            "endpoint_url": config(
+                "R2_ENDPOINT_URL"
+            ),
+            "region_name": "auto",
+            "custom_domain": config(
+                "R2_PUBLIC_DOMAIN"
+            ),
+            "querystring_auth": False,
+            "default_acl": None,
+            "file_overwrite": False,
+        },
+    }
+
+# ----------------------------------------------------------------------
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
