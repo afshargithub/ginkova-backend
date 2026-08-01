@@ -17,8 +17,12 @@ class MealListAPIView(APIView):
             Meal.objects
             .filter(is_active=True)
             .prefetch_related(
-                "recipes",
                 "categories",
+                "translations",
+                "recipes",
+                "recipes__ingredients",
+                "recipes__ingredients__ingredient",
+                "recipes__ingredients__unit",
             )
             .order_by("name")
         )
@@ -30,7 +34,9 @@ class MealListAPIView(APIView):
         if category_id:
             meals = (
                 meals
-                .filter(categories__id=category_id)
+                .filter(
+                    categories__id=category_id
+                )
                 .distinct()
             )
 
@@ -52,8 +58,23 @@ class MealDetailAPIView(APIView):
             meal = (
                 Meal.objects
                 .prefetch_related(
-                    "recipes",
                     "categories",
+                    "translations",
+                    "recipes",
+                    "recipes__translations",
+                    "recipes__ingredients",
+                    (
+                        "recipes__ingredients"
+                        "__ingredient"
+                    ),
+                    (
+                        "recipes__ingredients"
+                        "__ingredient__translations"
+                    ),
+                    (
+                        "recipes__ingredients"
+                        "__unit"
+                    ),
                 )
                 .get(
                     id=pk,
@@ -82,13 +103,20 @@ class MealDetailAPIView(APIView):
 class MealCategoryListAPIView(APIView):
 
     def get(self, request):
-        categories = MealCategory.objects.order_by(
-            "name"
+        categories = (
+            MealCategory.objects
+            .prefetch_related(
+                "translations"
+            )
+            .order_by("name")
         )
 
         serializer = MealCategorySerializer(
             categories,
             many=True,
+            context={
+                "request": request,
+            },
         )
 
         return Response(serializer.data)
@@ -104,8 +132,12 @@ class MealByCategoryAPIView(APIView):
                 categories__name__iexact=category,
             )
             .prefetch_related(
-                "recipes",
                 "categories",
+                "translations",
+                "recipes",
+                "recipes__ingredients",
+                "recipes__ingredients__ingredient",
+                "recipes__ingredients__unit",
             )
             .distinct()
             .order_by("name")

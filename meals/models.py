@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from recipes.models import Recipe
@@ -5,15 +6,68 @@ from recipes.models import Recipe
 
 class MealCategory(models.Model):
     name = models.CharField(
-        max_length=100
+        max_length=100,
     )
 
     description = models.TextField(
-        blank=True
+        blank=True,
     )
 
     def __str__(self):
         return self.name
+
+
+class MealCategoryTranslation(models.Model):
+    meal_category = models.ForeignKey(
+        MealCategory,
+        on_delete=models.CASCADE,
+        related_name="translations",
+    )
+
+    language = models.CharField(
+        max_length=10,
+        choices=settings.LANGUAGES,
+    )
+
+    name = models.CharField(
+        max_length=100,
+    )
+
+    description = models.TextField(
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "meal_category",
+                    "language",
+                ],
+                name=(
+                    "unique_meal_category_translation_language"
+                ),
+            ),
+        ]
+
+        ordering = [
+            "meal_category_id",
+            "language",
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.meal_category.name} "
+            f"({self.language})"
+        )
 
 
 class Meal(models.Model):
@@ -24,11 +78,11 @@ class Meal(models.Model):
     )
 
     name = models.CharField(
-        max_length=150
+        max_length=150,
     )
 
     description = models.TextField(
-        blank=True
+        blank=True,
     )
 
     image = models.ImageField(
@@ -43,7 +97,7 @@ class Meal(models.Model):
     )
 
     recipes = models.ManyToManyField(
-        Recipe
+        Recipe,
     )
 
     categories = models.ManyToManyField(
@@ -52,20 +106,73 @@ class Meal(models.Model):
     )
 
     is_featured = models.BooleanField(
-        default=False
+        default=False,
     )
 
     is_active = models.BooleanField(
-        default=True
+        default=True,
     )
 
     created_at = models.DateTimeField(
-        auto_now_add=True
+        auto_now_add=True,
     )
 
     updated_at = models.DateTimeField(
-        auto_now=True
+        auto_now=True,
     )
 
     def __str__(self):
         return self.name
+
+
+class MealTranslation(models.Model):
+    meal = models.ForeignKey(
+        Meal,
+        on_delete=models.CASCADE,
+        related_name="translations",
+    )
+
+    language = models.CharField(
+        max_length=10,
+        choices=settings.LANGUAGES,
+    )
+
+    name = models.CharField(
+        max_length=150,
+    )
+
+    description = models.TextField(
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "meal",
+                    "language",
+                ],
+                name=(
+                    "unique_meal_translation_language"
+                ),
+            ),
+        ]
+
+        ordering = [
+            "meal_id",
+            "language",
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.meal.name} "
+            f"({self.language})"
+        )

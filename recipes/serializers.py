@@ -1,17 +1,25 @@
 from rest_framework import serializers
 
+from common.serializers import (
+    LocalizedFieldsMixin,
+)
+from ingradients.serializers import (
+    IngredientSerializer,
+)
+
 from .models import Recipe, RecipeIngredient
-from ingradients.serializers import IngredientSerializer
 
 
+class RecipeIngredientSerializer(
+    serializers.ModelSerializer
+):
+    ingredient = IngredientSerializer(
+        read_only=True,
+    )
 
-class RecipeIngredientSerializer(serializers.ModelSerializer):
-
-    ingredient = IngredientSerializer(read_only=True)
     unit = serializers.StringRelatedField()
 
     class Meta:
-
         model = RecipeIngredient
 
         fields = (
@@ -21,17 +29,20 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         )
 
 
+class RecipeSerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    name = serializers.SerializerMethodField()
 
-class RecipeSerializer(serializers.ModelSerializer):
+    description = serializers.SerializerMethodField()
 
     ingredients = RecipeIngredientSerializer(
         many=True,
-        read_only=True
+        read_only=True,
     )
 
-
     class Meta:
-
         model = Recipe
 
         fields = (

@@ -1,17 +1,27 @@
 from rest_framework import serializers
 
-from .models import Meal, MealCategory
-from nutrition.services import calculate_meal_nutrition
+from common.serializers import (
+    LocalizedFieldsMixin,
+)
+from nutrition.services import (
+    calculate_meal_nutrition,
+)
 from recipes.serializers import RecipeSerializer
 
+from .models import Meal, MealCategory
 
-class MealSerializer(serializers.ModelSerializer):
+
+class MealSerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    name = serializers.SerializerMethodField()
+
+    description = serializers.SerializerMethodField()
 
     nutrition = serializers.SerializerMethodField()
 
-
     class Meta:
-
         model = Meal
 
         fields = (
@@ -25,28 +35,26 @@ class MealSerializer(serializers.ModelSerializer):
             "nutrition",
         )
 
-
     def get_nutrition(self, obj):
-
-        return calculate_meal_nutrition(
-            obj
-        )
+        return calculate_meal_nutrition(obj)
 
 
+class MealDetailSerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    name = serializers.SerializerMethodField()
 
-class MealDetailSerializer(serializers.ModelSerializer):
+    description = serializers.SerializerMethodField()
 
     recipes = RecipeSerializer(
         many=True,
-        read_only=True
+        read_only=True,
     )
-
 
     nutrition = serializers.SerializerMethodField()
 
-
     class Meta:
-
         model = Meal
 
         fields = (
@@ -61,19 +69,19 @@ class MealDetailSerializer(serializers.ModelSerializer):
             "nutrition",
         )
 
-
     def get_nutrition(self, obj):
-
-        return calculate_meal_nutrition(
-            obj
-        )
+        return calculate_meal_nutrition(obj)
 
 
+class MealCategorySerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    name = serializers.SerializerMethodField()
 
-class MealCategorySerializer(serializers.ModelSerializer):
+    description = serializers.SerializerMethodField()
 
     class Meta:
-
         model = MealCategory
 
         fields = (

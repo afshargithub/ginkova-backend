@@ -1,52 +1,82 @@
 from django.contrib import admin
 
-from .models import Recipe, RecipeIngredient
+from .models import (
+    Recipe,
+    RecipeIngredient,
+    RecipeTranslation,
+)
 
 
-class RecipeIngredientInline(admin.TabularInline):
+class RecipeTranslationInline(
+    admin.TabularInline
+):
+    model = RecipeTranslation
+
+    extra = 0
+
+    fields = (
+        "language",
+        "name",
+        "description",
+    )
+
+    ordering = (
+        "language",
+    )
+
+
+class RecipeIngredientInline(
+    admin.TabularInline
+):
     model = RecipeIngredient
-    extra = 1
 
+    extra = 0
 
-@admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
-
-    list_display = (
-        'name',
-        'preparation_time',
-        'cooking_time',
-        'is_active',
-    )
-
-    search_fields = (
-        'name',
-    )
-
-    list_filter = (
-        'is_active',
-    )
-
-    inlines = [
-        RecipeIngredientInline,
-    ]
-
-
-@admin.register(RecipeIngredient)
-class RecipeIngredientAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "id",
-        "recipe",
+    fields = (
         "ingredient",
         "quantity",
         "unit",
     )
 
+    autocomplete_fields = (
+        "ingredient",
+    )
+
+
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+        "preparation_time",
+        "cooking_time",
+        "ingredient_count",
+        "is_active",
+    )
+
     list_filter = (
-        "unit",
+        "is_active",
     )
 
     search_fields = (
-        "recipe__name",
-        "ingredient__name",
+        "name",
+        "description",
+        "translations__name",
+        "translations__description",
+    )
+
+    ordering = (
+        "name",
+    )
+
+    inlines = (
+        RecipeTranslationInline,
+        RecipeIngredientInline,
+    )
+
+    def ingredient_count(self, obj):
+        return obj.ingredients.count()
+
+    ingredient_count.short_description = (
+        "Ingredients"
     )
