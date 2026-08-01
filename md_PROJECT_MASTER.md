@@ -1,6 +1,6 @@
 # GINKOVA PROJECT MASTER DOCUMENT
 
-Last Update: 2026-08-01
+Last Update: 2026-08-02
 
 ---
 
@@ -64,6 +64,13 @@ Static Files:
 * Django collectstatic
 * WhiteNoise
 
+Internationalization:
+
+* Django LocaleMiddleware
+* Accept-Language request handling
+* Explicit translation models
+* Shared localized serializer logic
+
 Development:
 
 * VS Code
@@ -89,7 +96,19 @@ Libraries:
 * Axios
 * React Router
 * Tailwind CSS 4
-* Context API planned
+* i18next
+* react-i18next
+* Context API planned for authentication and cart
+
+Internationalization:
+
+* English
+* Persian
+* Armenian
+* Russian
+* Runtime language switching
+* localStorage persistence
+* RTL and LTR switching
 
 Deployment:
 
@@ -143,17 +162,29 @@ https://ginkova.com
 
 ↓
 
+React i18n Layer
+
+↓
+
 Frontend Services
 
 ↓
 
-Axios API Requests
+Shared Axios Instance
+
+↓
+
+`Accept-Language` Header
 
 ↓
 
 Django REST API
 
 https://api.ginkova.com
+
+↓
+
+LocaleMiddleware and Localized Serializers
 
 ↓
 
@@ -175,6 +206,7 @@ Examples:
 * Placeholder images
 * React JavaScript bundles
 * React CSS bundles
+* Frontend locale TypeScript files
 
 Managed by:
 
@@ -282,6 +314,43 @@ Public API URLs must use correctly spelled names where possible.
 
 ## 6. Backend Modules Status
 
+### Common Module
+
+Status:
+
+Multilingual Foundation Completed
+
+Implemented:
+
+* Supported language normalization
+* Default language definition
+* RTL language definition
+* Request language resolution
+* Language direction helper
+* Shared `LocalizedFieldsMixin` for serializers
+* Translation lookup caching on serialized objects
+
+Supported Languages:
+
+```text
+en — English
+fa — Persian
+hy — Armenian
+ru — Russian
+```
+
+Fallback Order:
+
+```text
+Requested language
+↓
+English translation
+↓
+Original model field
+```
+
+---
+
 ### Accounts
 
 Status:
@@ -315,7 +384,7 @@ Pending:
 
 Status:
 
-Completed Base
+Completed Base — Translation Layer Pending
 
 Responsibilities:
 
@@ -336,6 +405,16 @@ Examples:
 * Diabetes Control
 * Hypertension Control
 
+Next Multilingual Task:
+
+* Add `HealthGoalTranslation`
+* Add `DiseaseTranslation`
+* Preserve existing health profile relationships
+* Add English data migration
+* Add Django Admin translation inlines
+* Localize serializers
+* Test all four languages
+
 ---
 
 ### Nutrition Module
@@ -351,6 +430,7 @@ Completed:
 * Recipe nutrition calculation
 * Meal nutrition calculation
 * Weight unit conversion
+* Multilingual static nutrition labels in React
 
 Nutrition fields currently returned:
 
@@ -370,6 +450,7 @@ Pending:
 * Count-unit ingredient weight
 * Daily nutrition tracking
 * Safe handling of incomplete ingredient data
+* Nutrition value rounding and unit display
 
 Important:
 
@@ -377,11 +458,51 @@ Count units currently require an ingredient weight definition before accurate nu
 
 ---
 
+### Ingredients Module
+
+Internal App Name:
+
+* ingradients
+
+Status:
+
+Multilingual Backend Completed
+
+Completed:
+
+* `IngredientTranslation` model
+* Translation uniqueness by ingredient and language
+* English translation data migration
+* Django Admin translation inline
+* Localized ingredient serializer
+* English fallback and original-field fallback
+* Nested multilingual ingredient response through recipe and meal detail
+
+---
+
+### Recipes Module
+
+Status:
+
+Multilingual Backend Completed
+
+Completed:
+
+* `RecipeTranslation` model
+* Translation uniqueness by recipe and language
+* English translation data migration
+* Django Admin translation inline
+* Localized recipe serializer
+* Nested multilingual recipe response through meal detail
+* Recipe ingredient relations preserved
+
+---
+
 ### Meals Module
 
 Status:
 
-Completed MVP
+Completed Multilingual MVP
 
 Responsibilities:
 
@@ -391,11 +512,14 @@ Responsibilities:
 * Nutrition response
 * Active and featured status
 * Dynamic meal images
+* Localized API content
 
 Models:
 
 * Meal
 * MealCategory
+* MealTranslation
+* MealCategoryTranslation
 
 Meal contains:
 
@@ -428,9 +552,18 @@ Completed Improvements:
 * Dynamic image support
 * Cloudflare R2 production storage
 * Query ordering
-* Basic query optimization
+* Query optimization and translation prefetching
 * Production migration for Meal image field
 * Meal image fallback support in React
+* `MealTranslation` model
+* `MealCategoryTranslation` model
+* English translation data migrations
+* Django Admin translation inlines
+* `Accept-Language` localized responses
+* Requested-language to English fallback
+* English to original-field fallback
+* Nested multilingual Recipe and Ingredient data
+* Local API tests for English, Persian, Armenian and Russian fallback behavior
 
 ---
 
@@ -438,7 +571,7 @@ Completed Improvements:
 
 Status:
 
-Completed Base
+Completed Base — Translation Layer Pending
 
 Architecture:
 
@@ -458,6 +591,12 @@ RestaurantMeal contains:
 Important:
 
 Price belongs to RestaurantMeal, not the general Meal model.
+
+Pending Multilingual Work:
+
+* Inspect restaurant model fields
+* Add restaurant translation model where required
+* Localize restaurant serializers and admin
 
 ---
 
@@ -665,6 +804,7 @@ Pending:
 * User behavior analysis
 * AI recommendation
 * Machine learning model
+* Multilingual recommendation explanations
 
 ---
 
@@ -753,6 +893,16 @@ Production Server:
 
 * Gunicorn
 
+Internationalization Configuration:
+
+```text
+LANGUAGE_CODE = en
+LANGUAGES = en, fa, hy, ru
+LocaleMiddleware enabled
+```
+
+The Backend reads `Accept-Language` and normalizes regional values such as `fa-IR` to `fa`.
+
 ---
 
 ## 14. Frontend Architecture
@@ -770,6 +920,14 @@ src/
     config/
     context/
     hooks/
+    i18n/
+        index.ts
+        language.ts
+        locales/
+            en.ts
+            fa.ts
+            hy.ts
+            ru.ts
     pages/
     services/
     styles/
@@ -797,6 +955,26 @@ Axios Instance
 
 Django API
 
+Language Flow:
+
+LanguageSwitcher
+
+↓
+
+react-i18next
+
+↓
+
+localStorage and document `lang` / `dir`
+
+↓
+
+Axios `Accept-Language`
+
+↓
+
+Localized Django response
+
 ---
 
 ## 15. Frontend Components
@@ -808,6 +986,7 @@ components/
     common/
         AppImage
         Button
+        LanguageSwitcher
         Loading
 
     health/
@@ -840,6 +1019,19 @@ Image Components Completed:
 * Backend media URL support
 * Placeholder support
 
+Multilingual Components Completed:
+
+* LanguageSwitcher
+* Navbar
+* Footer
+* HeroSection
+* Home meal category section
+* MealCategoryCard
+* MealCategoryList loading, error and empty states
+* Meals page
+* MealCard buttons and nutrition labels
+* MealList loading, error and empty states
+
 ---
 
 ## 16. Frontend Pages
@@ -860,6 +1052,7 @@ Connected:
 * Meals by category
 * Dynamic meal images
 * Nutrition display
+* Four-language UI switching for current Home and Meals MVP
 
 Pending:
 
@@ -871,6 +1064,7 @@ Pending:
 * Health profile page
 * Address management page
 * Wallet page
+* Translation of authentication and future pages
 
 ---
 
@@ -892,6 +1086,8 @@ Completed Improvements:
 * TypeScript response typing
 * Axios query parameter handling
 * Consistent service-based API calls
+* Request interceptor for `Accept-Language`
+* Automatic use of the language stored in localStorage
 
 Pending Services:
 
@@ -937,13 +1133,107 @@ Final Production Request:
 https://api.ginkova.com/api/meals/
 ```
 
+Language Header Examples:
+
+```http
+Accept-Language: en
+Accept-Language: fa
+Accept-Language: hy
+Accept-Language: ru
+```
+
 Important:
 
 API paths inside services must not repeat `/api` when the environment base URL already contains `/api`.
 
 ---
 
-## 19. Image System Status
+## 19. Multilingual System Status
+
+### Frontend UI Translation
+
+Status:
+
+Completed for Current Home and Meals MVP
+
+Implemented:
+
+* i18next and react-i18next installed
+* Four locale files created
+* Runtime language switcher added to Navbar
+* Language stored in localStorage
+* Saved language restored on startup
+* English fallback configured
+* HTML `lang` updated dynamically
+* HTML `dir` updated dynamically
+* Persian uses RTL
+* English, Armenian and Russian use LTR
+* Navbar translated
+* Footer translated
+* Hero translated
+* Home category section translated
+* Meals page translated
+* Loading, error and empty states translated
+* Meal action buttons translated
+* Nutrition labels translated
+* API data refetched after language changes
+
+Current Locale Files:
+
+```text
+src/i18n/locales/en.ts
+src/i18n/locales/fa.ts
+src/i18n/locales/hy.ts
+src/i18n/locales/ru.ts
+```
+
+Pending Frontend Translation:
+
+* Authentication pages
+* Profile page
+* Orders page
+* Health components
+* Cart and checkout pages
+* Future restaurant pages
+* Global form validation and toast messages
+
+---
+
+### Backend Content Translation
+
+Status:
+
+Partially Completed
+
+Completed Entities:
+
+* MealCategory
+* Meal
+* Recipe
+* Ingredient
+
+Pending Entities:
+
+* HealthGoal
+* Disease
+* Restaurant where required
+* Notifications
+* Recommendation explanations
+* Other future content entities
+
+Architecture Decision:
+
+* Explicit translation models
+* Keep original model text fields for compatibility and final fallback
+* Translation table has one row per entity and language
+* Unique constraint on entity plus language
+* English data migration from existing content
+* Django Admin inline translation management
+* Serializer localization by `Accept-Language`
+
+---
+
+## 20. Image System Status
 
 ### Static Images
 
@@ -1011,13 +1301,13 @@ Pending Image Improvements:
 
 ---
 
-## 20. Deployment Status
+## 21. Deployment Status
 
 ### Frontend
 
 Status:
 
-Completed
+Base Production Deployment Completed
 
 Platform:
 
@@ -1035,7 +1325,12 @@ npm run build
 
 Build Status:
 
-* Verified successfully
+* Verified successfully after installing and configuring i18next
+* Current Home and Meals multilingual build verified locally
+
+Next Deployment Task:
+
+* Deploy the four-language frontend changes after final local verification
 
 ---
 
@@ -1043,7 +1338,7 @@ Build Status:
 
 Status:
 
-Completed
+Completed Base Deployment
 
 Platform:
 
@@ -1070,44 +1365,55 @@ Resolved Deployment Issues:
 * Django Admin assets served
 * Dynamic meal images stored in R2
 * Meal and category APIs verified
+* Translation migrations for MealCategory, Meal, Recipe and Ingredient prepared and tested
+* Localized API behavior tested with `Accept-Language`
 
 ---
 
-## 21. Current Development Priority
+## 22. Current Development Priority
 
 Current Phase:
 
-Multilingual Frontend and Backend Foundation
+Backend Content Translation Continuation
 
-Target Languages:
+Completed in Current Multilingual Phase:
 
-* Persian — fa
-* English — en
-* Armenian — hy
-* Russian — ru
+1. Django language configuration
+2. LocaleMiddleware
+3. Shared backend language helpers
+4. MealCategory translation model
+5. Meal translation model
+6. Recipe translation model
+7. Ingredient translation model
+8. English data migrations
+9. Django Admin translation inlines
+10. Localized serializers
+11. Translation prefetch optimization
+12. Accept-Language API tests
+13. i18next and react-i18next installation
+14. Four frontend locale files
+15. Language switcher
+16. localStorage persistence
+17. RTL and LTR switching
+18. Axios language interceptor
+19. Home and Meals UI translation
+20. Multilingual local build verification
 
 Next Steps:
 
-1. Install and configure React i18n library
-2. Create language resource structure
-3. Implement LanguageContext or i18n configuration
-4. Add language switcher
-5. Save selected language
-6. Implement RTL and LTR switching
-7. Translate shared UI components
-8. Translate Navbar and Footer
-9. Translate Home page
-10. Translate Meal list and cards
-11. Translate loading, error and empty states
-12. Define backend content translation strategy
-13. Add Accept-Language support
-14. Translate MealCategory data
-15. Translate Meal data
-16. Translate HealthGoal data
+1. Add `HealthGoalTranslation`
+2. Add `DiseaseTranslation`
+3. Populate English health translations
+4. Add Health Django Admin translation inlines
+5. Localize Health serializers
+6. Test Health data in English, Persian, Armenian and Russian
+7. Add Restaurant translations where needed
+8. Translate remaining frontend pages as each module is activated
+9. Deploy finalized frontend multilingual changes
 
 ---
 
-## 22. Multilingual Architecture Rules
+## 23. Multilingual Architecture Rules
 
 1. UI text must not be hardcoded inside components.
 
@@ -1126,11 +1432,15 @@ ru
 
 5. English, Armenian and Russian use LTR.
 
-6. The selected language must be stored in localStorage.
+6. The selected language is stored in localStorage under:
 
-7. The HTML `lang` and `dir` attributes must update when language changes.
+```text
+ginkova_language
+```
 
-8. CSS must prefer logical properties:
+7. The HTML `lang` and `dir` attributes update when language changes.
+
+8. CSS should prefer logical properties:
 
 ```text
 margin-inline-start
@@ -1140,25 +1450,37 @@ padding-inline-end
 text-align: start
 ```
 
-9. Backend database content and frontend interface text must be treated separately.
+9. Backend database content and frontend interface text are separate translation layers.
 
-10. API requests should eventually send:
+10. API requests send:
 
 ```text
 Accept-Language
 ```
 
-11. A fallback language must be defined.
-
-Recommended fallback:
+11. Fallback language:
 
 ```text
 English
 ```
 
+12. Backend fallback order:
+
+```text
+Requested translation
+English translation
+Original model field
+```
+
+13. Original model fields must remain until a deliberate future migration removes them.
+
+14. Translation relations should be prefetched to avoid N+1 queries.
+
+15. Existing model relations must not be broken when translation models are added.
+
 ---
 
-## 23. Development Rules
+## 24. Development Rules
 
 1. No API calls directly inside components.
 
@@ -1180,9 +1502,83 @@ English
 
 10. Old code versions must be stored in Git history, not as duplicate files inside `src`.
 
+11. Translation changes must be tested in all four language codes.
+
+12. Database translation migrations must preserve existing data.
+
 ---
 
-## 24. Change Log
+## 25. Security and Dependency Notes
+
+### React Router Advisory
+
+Current Audit Status:
+
+* npm reports a high-severity advisory affecting React Router RSC mode.
+* GINKOVA currently uses standard client-side routing and does not use unstable React Server Components APIs.
+* The reported RSC-specific issue is not currently exploitable through the present frontend architecture.
+
+Decision:
+
+* Do not run `npm audit fix --force`.
+* Keep the current React Router 7 setup for now.
+* Review upgrade to React Router 8.3 or later in a dedicated migration task.
+* Verify Node.js compatibility before the major upgrade.
+
+Completed Dependency Maintenance:
+
+* `brace-expansion` vulnerability fixed through regular `npm audit fix`.
+* Production frontend build verified after the fix.
+
+---
+
+## 26. Change Log
+
+### 2026-08-02
+
+Completed Backend Multilingual Work:
+
+* Configured four Django languages: English, Persian, Armenian and Russian.
+* Enabled LocaleMiddleware.
+* Added shared backend language normalization and direction helpers.
+* Added shared localized serializer mixin.
+* Added MealCategoryTranslation and MealTranslation models.
+* Added IngredientTranslation and RecipeTranslation models.
+* Added unique translation constraints.
+* Created English translation data migrations from existing fields.
+* Added Django Admin translation inlines.
+* Localized MealCategory, Meal, Recipe and Ingredient serializers.
+* Added requested-language, English and original-field fallback behavior.
+* Added translation prefetching for list and detail APIs.
+* Tested `Accept-Language` for English, Persian, Armenian and Russian fallback behavior.
+
+Completed Frontend Multilingual Work:
+
+* Installed i18next and react-i18next.
+* Created language management helpers.
+* Added English, Persian, Armenian and Russian locale files.
+* Added LanguageSwitcher to Navbar.
+* Added localStorage language persistence.
+* Added dynamic HTML `lang` and `dir` updates.
+* Added RTL support for Persian.
+* Added LTR support for English, Armenian and Russian.
+* Added `Accept-Language` Axios interceptor.
+* Added API refetching after a language change.
+* Translated Navbar, Footer and Hero.
+* Translated Home category section.
+* Translated Meals page and meal cards.
+* Translated loading, error and empty states.
+* Translated nutrition labels.
+* Verified local language switching and persistence.
+* Verified successful Vite production build.
+* Fixed the `brace-expansion` audit issue.
+* Recorded the React Router RSC advisory for later review.
+
+Current Focus:
+
+* HealthGoal and Disease backend translations
+
+---
 
 ### 2026-08-01
 
@@ -1211,12 +1607,6 @@ Completed:
 * Confirmed Namecheap remains the DNS provider.
 * Deferred custom `media.ginkova.com` domain.
 * Completed the MVP image infrastructure phase.
-
-Current Focus:
-
-* Four-language support
-* Persian, English, Armenian and Russian
-* RTL and LTR support
 
 ---
 
