@@ -72,6 +72,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -167,9 +170,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Add this line to specify the static files directory
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATICFILES_DIRS = [BASE_DIR / 'static']  # Add this line to specify the static files directory
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  # Add this line to specify the media files directory
 AUTH_USER_MODEL = 'accounts.User'  # Add this line to specify the custom user model
@@ -190,12 +193,20 @@ STORAGES = {
             "FileSystemStorage"
         ),
     },
+    
     "staticfiles": {
         "BACKEND": (
-            "django.contrib.staticfiles.storage."
-            "StaticFilesStorage"
+            "whitenoise.storage."
+            "CompressedManifestStaticFilesStorage"
         ),
-    },
+    },    
+    # "staticfiles": {
+    #     "BACKEND": (
+    #         "django.contrib.staticfiles.storage."
+    #         "StaticFilesStorage"
+    #     ),
+    # },
+    
 }
 if USE_R2:
     STORAGES["default"] = {

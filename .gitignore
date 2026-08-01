@@ -14,3 +14,5 @@ venv/
 env/
 
 HAMID_AFSHAR_Install_Files_Pics/
+
+staticfiles/
