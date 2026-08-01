@@ -1,98 +1,122 @@
-from rest_framework.views import APIView
+from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Meal, MealCategory
-from .serializers import (MealSerializer, MealDetailSerializer, MealCategorySerializer,)
+from .serializers import (
+    MealCategorySerializer,
+    MealDetailSerializer,
+    MealSerializer,
+)
 
 
 class MealListAPIView(APIView):
 
     def get(self, request):
-
-        meals = Meal.objects.filter(
-            is_active=True)
+        meals = (
+            Meal.objects
+            .filter(is_active=True)
+            .prefetch_related(
+                "recipes",
+                "categories",
+            )
+            .order_by("name")
+        )
 
         category_id = request.query_params.get(
-            "category")
+            "category"
+        )
 
         if category_id:
-
-            meals = meals.filter(
-                categories__id=category_id)
+            meals = (
+                meals
+                .filter(categories__id=category_id)
+                .distinct()
+            )
 
         serializer = MealSerializer(
             meals,
-            many=True)
-
-        return Response(
-            serializer.data
+            many=True,
+            context={
+                "request": request,
+            },
         )
-        
-        
+
+        return Response(serializer.data)
+
 
 class MealDetailAPIView(APIView):
 
     def get(self, request, pk):
-
         try:
-
-            meal = Meal.objects.get(
-                id=pk,
-                is_active=True
+            meal = (
+                Meal.objects
+                .prefetch_related(
+                    "recipes",
+                    "categories",
+                )
+                .get(
+                    id=pk,
+                    is_active=True,
+                )
             )
 
         except Meal.DoesNotExist:
-
             return Response(
                 {
-                    "error": "Meal not found"
+                    "error": "Meal not found",
                 },
-                status=404
+                status=status.HTTP_404_NOT_FOUND,
             )
 
-
         serializer = MealDetailSerializer(
-            meal
+            meal,
+            context={
+                "request": request,
+            },
         )
 
+        return Response(serializer.data)
 
-        return Response(
-            serializer.data
-        )
-        
 
 class MealCategoryListAPIView(APIView):
 
     def get(self, request):
-
-        categories = MealCategory.objects.all()
+        categories = MealCategory.objects.order_by(
+            "name"
+        )
 
         serializer = MealCategorySerializer(
             categories,
-            many=True
+            many=True,
         )
 
-        return Response(
-            serializer.data
-        )    
-        
-        
+        return Response(serializer.data)
 
 
 class MealByCategoryAPIView(APIView):
 
     def get(self, request, category):
-
-        meals = Meal.objects.filter(
-            is_active=True,
-            categories__name__iexact=category
+        meals = (
+            Meal.objects
+            .filter(
+                is_active=True,
+                categories__name__iexact=category,
+            )
+            .prefetch_related(
+                "recipes",
+                "categories",
+            )
+            .distinct()
+            .order_by("name")
         )
 
         serializer = MealSerializer(
             meals,
-            many=True
+            many=True,
+            context={
+                "request": request,
+            },
         )
 
-        return Response(
-            serializer.data
-        )
+        return Response(serializer.data)

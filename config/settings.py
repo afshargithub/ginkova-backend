@@ -29,13 +29,13 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # new 1405-05-07
-ALLOWED_HOSTS = ["api.ginkova.com",
-                 "ginkova-backend.onrender.com",]
 # ALLOWED_HOSTS = ["api.ginkova.com",
-#                  "ginkova-backend.onrender.com",
-#                  "localhost",
-#                  "127.0.0.1"
-#                  ]
+#                  "ginkova-backend.onrender.com",]
+ALLOWED_HOSTS = ["api.ginkova.com",
+                 "ginkova-backend.onrender.com",
+                 "localhost",
+                 "127.0.0.1"
+                 ]
 
 
 # Application definition
@@ -168,6 +168,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Add this line to specify the static files directory
+STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  # Add this line to specify the media files directory
 AUTH_USER_MODEL = 'accounts.User'  # Add this line to specify the custom user model
@@ -183,12 +184,12 @@ ACTIVE_PAYMENT_GATEWAYS = ['fake', "mellat", "melli", "zarinpal"]  # Default to 
 
 
 # ----connect to React ------
-CORS_ALLOWED_ORIGINS = [ 
-                        "https://ginkova.com",
-                        "https://www.ginkova.com",
-                        ]
 # CORS_ALLOWED_ORIGINS = [ 
 #                         "https://ginkova.com",
 #                         "https://www.ginkova.com",
-#                         "http://localhost:5173",
 #                         ]
+CORS_ALLOWED_ORIGINS = [ 
+                        "https://ginkova.com",
+                        "https://www.ginkova.com",
+                        "http://localhost:5173",
+                        ]

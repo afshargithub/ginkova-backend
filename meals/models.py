@@ -1,12 +1,9 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
 from recipes.models import Recipe
 
 
 class MealCategory(models.Model):
-
     name = models.CharField(
         max_length=100
     )
@@ -15,34 +12,34 @@ class MealCategory(models.Model):
         blank=True
     )
 
-
     def __str__(self):
         return self.name
 
 
-
 class Meal(models.Model):
-
     MEAL_TYPE_CHOICES = (
-        ('breakfast', 'Breakfast'),
-        ('lunch', 'Lunch'),
-        ('dinner', 'Dinner'),
+        ("breakfast", "Breakfast"),
+        ("lunch", "Lunch"),
+        ("dinner", "Dinner"),
     )
-
 
     name = models.CharField(
         max_length=150
     )
 
-
     description = models.TextField(
         blank=True
     )
 
+    image = models.ImageField(
+        upload_to="meals/",
+        blank=True,
+        null=True,
+    )
 
     meal_type = models.CharField(
         max_length=20,
-        choices=MEAL_TYPE_CHOICES
+        choices=MEAL_TYPE_CHOICES,
     )
 
     recipes = models.ManyToManyField(
@@ -51,7 +48,7 @@ class Meal(models.Model):
 
     categories = models.ManyToManyField(
         MealCategory,
-        blank=True
+        blank=True,
     )
 
     is_featured = models.BooleanField(
@@ -62,11 +59,9 @@ class Meal(models.Model):
         default=True
     )
 
-
     created_at = models.DateTimeField(
         auto_now_add=True
     )
-
 
     updated_at = models.DateTimeField(
         auto_now=True
