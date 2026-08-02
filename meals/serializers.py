@@ -81,6 +81,10 @@ class MealCategorySerializer(
 
     description = serializers.SerializerMethodField()
 
+    image = serializers.ImageField(
+        read_only=True,
+    )
+
     class Meta:
         model = MealCategory
 
@@ -88,4 +92,5 @@ class MealCategorySerializer(
             "id",
             "name",
             "description",
+            "image",
         )

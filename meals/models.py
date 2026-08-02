@@ -13,10 +13,16 @@ class MealCategory(models.Model):
         blank=True,
     )
 
+    image = models.ImageField(
+        upload_to="meal_categories/",
+        blank=True,
+        null=True,
+    )
+
     def __str__(self):
         return self.name
-
-
+    
+    
 class MealCategoryTranslation(models.Model):
     meal_category = models.ForeignKey(
         MealCategory,
