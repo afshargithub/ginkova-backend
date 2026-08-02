@@ -1,12 +1,24 @@
 from rest_framework import serializers
 
-from .models import Restaurant, RestaurantMeal
+from common.serializers import (
+    LocalizedFieldsMixin,
+)
+
+from .models import (
+    Restaurant,
+    RestaurantMeal,
+)
 
 
-class RestaurantSerializer(serializers.ModelSerializer):
+class RestaurantSerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    name = serializers.SerializerMethodField()
+
+    address = serializers.SerializerMethodField()
 
     class Meta:
-
         model = Restaurant
 
         fields = (
@@ -23,21 +35,31 @@ class RestaurantSerializer(serializers.ModelSerializer):
             "is_active",
         )
 
+    def get_address(self, obj):
+        translation = self.get_translation(obj)
 
-class RestaurantMealSerializer(serializers.ModelSerializer):
+        if (
+            translation is not None
+            and translation.address
+        ):
+            return translation.address
 
-    restaurant_name = serializers.CharField(
-        source="restaurant.name",
-        read_only=True
+        return obj.address
+
+
+class RestaurantMealSerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    restaurant_name = (
+        serializers.SerializerMethodField()
     )
 
-    meal_name = serializers.CharField(
-        source="meal.name",
-        read_only=True
+    meal_name = (
+        serializers.SerializerMethodField()
     )
 
     class Meta:
-
         model = RestaurantMeal
 
         fields = (
@@ -48,4 +70,14 @@ class RestaurantMealSerializer(serializers.ModelSerializer):
             "image",
             "estimated_preparation_time",
             "is_available",
+        )
+
+    def get_restaurant_name(self, obj):
+        return self.get_name(
+            obj.restaurant
+        )
+
+    def get_meal_name(self, obj):
+        return self.get_name(
+            obj.meal
         )
