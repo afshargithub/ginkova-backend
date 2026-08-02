@@ -1,7 +1,10 @@
+from rest_framework import serializers
+
 from common.i18n import (
     DEFAULT_LANGUAGE_CODE,
     get_request_language,
 )
+from common.models import Unit
 
 
 class LocalizedFieldsMixin:
@@ -84,3 +87,20 @@ class LocalizedFieldsMixin:
             return translation.description
 
         return obj.description
+
+
+class UnitSerializer(
+    LocalizedFieldsMixin,
+    serializers.ModelSerializer,
+):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Unit
+
+        fields = (
+            "id",
+            "name",
+            "symbol",
+            "unit_type",
+        )

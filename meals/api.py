@@ -75,6 +75,11 @@ class MealDetailAPIView(APIView):
                         "recipes__ingredients"
                         "__unit"
                     ),
+                    (
+                        "recipes__ingredients"
+                        "__unit__translations"
+                    ),
+                    
                 )
                 .get(
                     id=pk,

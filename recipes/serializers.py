@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from common.serializers import (
     LocalizedFieldsMixin,
+    UnitSerializer,
 )
 from ingradients.serializers import (
     IngredientSerializer,
@@ -17,7 +18,9 @@ class RecipeIngredientSerializer(
         read_only=True,
     )
 
-    unit = serializers.StringRelatedField()
+    unit = UnitSerializer(
+        read_only=True,
+    )
 
     class Meta:
         model = RecipeIngredient
